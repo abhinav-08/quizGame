@@ -19,7 +19,7 @@ public class Game extends Applet
     
     
     boolean s1,s2,s3,s4;
-    static int currentQuestion=1,scoreSoFar=0,c=0,x=0;
+    static int currentQuestion=1,scoreSoFar=0,c=0,x=0,p=1;
     static String userName="";
 
     @Override
@@ -29,14 +29,12 @@ public class Game extends Applet
         requestForName=new Label("Please enter your name : ");
         questionLabel=new Label("");
 
-        //connect to creator
-        //contactCreator=new Button("Know about creator");
-
         nameOfUser=new TextField();
         
         submitName=new Button(" Submit ");
         startTheTest=new Button("Start Test");
         next=new Button("Next");
+        previous=new Button("Previous");
         
         backgroundPicture=getImage(getDocumentBase(),"Game-bg.png");
        
@@ -47,7 +45,8 @@ public class Game extends Applet
         nameOfUser.setBounds(240,100,200,20);
         submitName.setBounds(240,200,60,20);
         startTheTest.setBounds(170,140,60,20);
-        next.setBounds(80,290,40,30);
+        next.setBounds(150,290,40,30);
+        previous.setBounds(80,290,60,30);
         questionLabel.setBounds(40,100,300,30);
         
         //contactCreator.setBounds(240,400,150,70);
@@ -55,6 +54,7 @@ public class Game extends Applet
         add(requestForName);
         add(nameOfUser);
         add(submitName);
+        
         //add(contactCreator);
     }
     
@@ -64,15 +64,8 @@ public class Game extends Applet
        submitName.addActionListener(new NameSubmission());
        startTheTest.addActionListener(new Questionhandler());
        next.addActionListener(new Questionhandler());
-       //contactCreator.addActionListener(new Details());
-    }
-    
-    public class Details implements ActionListener
-    {
-        public void actionPerformed(ActionEvent e)
-        {
-            
-        }
+       previous.addActionListener(new Questionhandler2());
+       
     }
 
     public class NameSubmission implements ActionListener
@@ -82,7 +75,7 @@ public class Game extends Applet
         {
             userName=nameOfUser.getText();
             
-            welcomeText.setText("Welcome "+userName);
+            welcomeText.setText("Welcome "+userName+" to this quiz ");
             remove(submitName);
             remove(nameOfUser);
             remove(requestForName);
@@ -103,6 +96,8 @@ public class Game extends Applet
                 remove(option1);remove(option3);
                 remove(option2);remove(option4);
             }
+         
+            
             
             option1=new Checkbox ("",cbg,false); 
             option2=new Checkbox ("",cbg,false);
@@ -126,81 +121,181 @@ public class Game extends Applet
                 c=1;
             }
 
-            if(currentQuestion==1)
+            switch(currentQuestion)
             {
-              
-                questionLabel.setText("1. Who was inventor of c programming ? ");
-                option1.setLabel("Dennis ritchie");option3.setLabel("Edison");
-                option2.setLabel("Einstien");option4.setLabel("AryaBhatta");
+                case 1:
+                {     
+                    remove(previous);
+                    questionLabel.setText("1. Who was inventor of c programming ? ");
+                    option1.setLabel("Dennis ritchie");option3.setLabel("Edison");
+                    option2.setLabel("Einstien");option4.setLabel("AryaBhatta");
                 
-                if(option1.getState()==true)
-                {
-                    scoreSoFar=scoreSoFar+1;
+                    if(option1.getState()==true)
+                    {
+                        scoreSoFar=scoreSoFar+1;
+                    }
                 }
-
-            }
-            else if(currentQuestion==2)
-            {
-                questionLabel.setText("2.Which of those doesn't allows duplicate elements? ");
-                option1.setLabel("List");option3.setLabel("Stack");
-                option2.setLabel("set");option4.setLabel("vector");
                 
-                if(option2.getState()==true)
-                {
-                    scoreSoFar=scoreSoFar+1;
+                break;
+                
+                case 2:
+                {     
+                    add(previous);
+                    questionLabel.setText("2.Which of those doesn't allows duplicate elements? ");
+                    option1.setLabel("List");option3.setLabel("Stack");
+                    option2.setLabel("set");option4.setLabel("vector");
+                
+                    if(option2.getState()==true)
+                    {
+                        scoreSoFar=scoreSoFar+1;
+                    }
                 }
-            }
-            
-            else if(currentQuestion==3)
-            {
-                questionLabel.setText("3.Methods such as reverse, shuffle are offered in:-");
-                option1.setLabel("Object");option3.setLabel("Collection");
-                option2.setLabel("Collections");option4.setLabel("None of the above");
+                 break;
+                 
+                case 3:
+                {     
+                    questionLabel.setText("3.Methods such as reverse, shuffle are offered in:-");
+                    option1.setLabel("Object");option3.setLabel("Collection");
+                    option2.setLabel("Collections");option4.setLabel("None of the above");
                
-                if(option2.getState()==true)
-                {
-                    scoreSoFar=scoreSoFar+1;
-                }
-            }
+                    if(option2.getState()==true)
+                    {
+                        scoreSoFar=scoreSoFar+1;
+                    }
+                } break;
             
-            else if(currentQuestion==4)
-            {
-                questionLabel.setText("4. 'java.util.Collections' is a: ");
-                option1.setLabel("Class");option3.setLabel("Collection");
-                option2.setLabel("Interface");option4.setLabel("None of the above");
+                case 4:
+                {     
+                    questionLabel.setText("4. 'java.util.Collections' is a: ");
+                    option1.setLabel("Class");option3.setLabel("Collection");
+                    option2.setLabel("Interface");option4.setLabel("None of the above");
                 
-                if(option1.getState()==true)
-                {
-                    scoreSoFar=scoreSoFar+1;
-                }
-            }
+                    if(option1.getState()==true)
+                    {
+                        scoreSoFar=scoreSoFar+1;
+                    }
+                } break;
             
-            else if (currentQuestion==5)
-            {
-                questionLabel.setText("5. Which of those doesn't have an index based structure? ");
-                option1.setLabel("List");option3.setLabel("Map");
-                option2.setLabel("String");option4.setLabel("Array");
+                case 5:
+                {     
+                    questionLabel.setText("5. Which of those doesn't have an index based structure? ");
+                    option1.setLabel("List");option3.setLabel("Map");
+                    option2.setLabel("String");option4.setLabel("Array");
                 
-                if(option3.getState()==true)
-                {
-                    scoreSoFar=scoreSoFar+1;
-                }
+                    if(option3.getState()==true)
+                    {
+                        scoreSoFar=scoreSoFar+1;
+                    }
                 
-                next.setLabel("Results");
-            }
+                    next.setLabel("Results");
+                } break;
             
-            else
-            {
-                questionLabel.setText(userName+" your score is  "+scoreSoFar);
-                remove(option1);remove(option3);
-                remove(option2);remove(option4);
-                remove(next);
-            }
+                default :
+                {
+                    questionLabel.setText(userName+" your score is  "+scoreSoFar);
+                    remove(option1);remove(option3);
+                    remove(option2);remove(option4);
+                    remove(next);
+                    remove(previous);
+                }break;
             
+            }
             currentQuestion = currentQuestion+1;
             x=1;
         }
     }
+    
+    public class Questionhandler2 implements ActionListener
+    {
+        
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            currentQuestion=currentQuestion-2;
+            switch(currentQuestion)
+            {
+                case 1:
+                {     
+                    remove(previous);
+                    questionLabel.setText("1. Who was inventor of c programming ? ");
+                    option1.setLabel("Dennis ritchie");option3.setLabel("Edison");
+                    option2.setLabel("Einstien");option4.setLabel("AryaBhatta");
+                
+                    if(option1.getState()==true)
+                    {
+                        scoreSoFar=scoreSoFar+1;
+                    }
+                }
+                
+                break;
+                
+                case 2:
+                {     
+                    add(previous);
+                    questionLabel.setText("2.Which of those doesn't allows duplicate elements? ");
+                    option1.setLabel("List");option3.setLabel("Stack");
+                    option2.setLabel("set");option4.setLabel("vector");
+                
+                    if(option2.getState()==true)
+                    {
+                        scoreSoFar=scoreSoFar+1;
+                    }
+                }
+                 break;
+                 
+                case 3:
+                {     
+                    questionLabel.setText("3.Methods such as reverse, shuffle are offered in:-");
+                    option1.setLabel("Object");option3.setLabel("Collection");
+                    option2.setLabel("Collections");option4.setLabel("None of the above");
+               
+                    if(option2.getState()==true)
+                    {
+                        scoreSoFar=scoreSoFar+1;
+                    }
+                } break;
+            
+                case 4:
+                {     
+                    questionLabel.setText("4. 'java.util.Collections' is a: ");
+                    option1.setLabel("Class");option3.setLabel("Collection");
+                    option2.setLabel("Interface");option4.setLabel("None of the above");
+                
+                    if(option1.getState()==true)
+                    {
+                        scoreSoFar=scoreSoFar+1;
+                    }
+                } break;
+            
+                case 5:
+                {     
+                    questionLabel.setText("5. Which of those doesn't have an index based structure? ");
+                    option1.setLabel("List");option3.setLabel("Map");
+                    option2.setLabel("String");option4.setLabel("Array");
+                
+                    if(option3.getState()==true)
+                    {
+                        scoreSoFar=scoreSoFar+1;
+                    }
+                
+                    next.setLabel("Results");
+                } break;
+            
+                default :
+                {
+                    questionLabel.setText(userName+" your score is  "+scoreSoFar);
+                    remove(option1);remove(option3);
+                    remove(option2);remove(option4);
+                    remove(next);
+                    remove(previous);
+                }break;
+            
+            }
+            currentQuestion = currentQuestion+1;
+            x=1;
+        }
+    }
+   
     
     //adding a background image in the applet;
     public void paint(Graphics g)
